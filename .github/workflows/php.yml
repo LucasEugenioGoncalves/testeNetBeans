@@ -16,14 +16,14 @@ jobs:
     - name: Setup SSH connection
       uses: webfactory/ssh-agent@v0.5.0
       with:
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+        ssh-private-key: 'Wmbarros@2024!'
 
     - name: Copy files into the server
       uses: appleboy/scp-action@v0.1.4
       with:
         host: '201.46.121.218'
         username: 'admin'
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        key: 'Wmbarros@2024!'
         source: ./
         target: /path/to/project
 
