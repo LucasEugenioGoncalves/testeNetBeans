@@ -1,17 +1,17 @@
-name: CD
+name: CI
 
-on:
-  push:
-    branches: [ main ]
+on: [push]
 
 jobs:
   deploy:
-    runs-on: debian-latest
+    if: github.ref == 'refs/heads/master'
+    runs-on: [ubuntu-latest]
     steps:
-    - name: Deploy to <your domain>
-      uses: appleboy/ssh-action@master
-      with:
-        username: admin
-        host: 201.46.121.218
-        password: Wmbarros@2024!
-        script: 'cd /var/www/html/Teste && ./server_deploy.sh'
+      - uses: actions/checkout@v1
+      - name: Push to server
+        uses: appleboy/ssh-action@master
+        with:
+          host: '201.46.121.218'
+          username: 'admin'
+          password: 'Wmbarros@2024!'
+          script: cd /var/www/html/Teste && git pull
