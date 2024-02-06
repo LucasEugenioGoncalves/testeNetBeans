@@ -14,14 +14,4 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Copy files to server
-        uses: appleboy/scp-action@v0.1.4
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.SSHKEY }}
-          source: "./*"
-          target: "/var/www/html/Teste"
-          port: ${{ secrets.PORT }}
-          timeout: 30s
-          command_timeout: 10m
-          key_path: /home/wmbarros/.ssh/id_rsa.pub
+        run: scp -i /home/wmbarros/.ssh/id_rsa -P ${{ secrets.PORT }} -r ./* ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/var/www/html/Teste
