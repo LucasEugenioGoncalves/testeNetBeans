@@ -28,7 +28,7 @@ jobs:
           target: /var/www/html/Teste
 
       - name: Deploy
-        uses: fifsky/ssh-action@main
+        uses: fifsky/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
           port: ${{ secrets.PORT }}
