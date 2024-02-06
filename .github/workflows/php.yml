@@ -23,7 +23,7 @@ jobs:
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.SSHKEY }}
+          key: ${{ secrets.SSHKEYPUB }}
           source: "./*"
           target: "/var/www/html/Teste"
           port: ${{ secrets.PORT }}
