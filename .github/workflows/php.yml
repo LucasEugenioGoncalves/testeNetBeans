@@ -13,11 +13,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Sync files to server
-        uses: panubo/rsync-action@v2
-        with:
-          flags: '-avz --delete'
-          source: ./
-          destination: ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/var/www/html/Teste
-          key: ${{ secrets.SSHKEY }}
-          port: ${{ secrets.PORT }}
+      - name: Copy files to server
+        run: ./copy_files.sh
+        env:
+          INPUT_HOST: ${{ secrets.HOST }}
+          INPUT_USERNAME: ${{ secrets.USERNAME }}
+          INPUT_KEY: ${{ secrets.SSHKEY }}
+          INPUT_PORT: ${{ secrets.PORT }}
