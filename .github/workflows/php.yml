@@ -13,5 +13,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Copy files to server
-        run: scp -i /home/wmbarros/.ssh/id_rsa -P ${{ secrets.PORT }} -r ./* ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/var/www/html/Teste
+      - name: Sync files to server
+        uses: panubo/rsync-action@v2
+        with:
+          flags: '-avz --delete'
+          source: ./
+          destination: ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/var/www/html/Teste
+          key: ${{ secrets.SSHKEY }}
+          port: ${{ secrets.PORT }}
