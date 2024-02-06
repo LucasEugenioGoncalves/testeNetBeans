@@ -24,4 +24,4 @@ jobs:
           port: ${{ secrets.PORT }}
           timeout: 30s
           command_timeout: 10m
-          key_path: /home/wmbarros/.ssh
+          key_path: /home/wmbarros/.ssh/id_rsa.pub
