@@ -1,46 +1,46 @@
 name: Deploy
-
+ 
 on:
-  push:
-    branches:
-      - main
-
+    push:
+        branches:
+            - main
 jobs:
   build:
-    runs-on: ubuntu-latest
-
+ 
+    runs-on: debian-latest
+ 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-
+ 
     - name: Setup SSH connection
       uses: webfactory/ssh-agent@v0.5.0
       with:
-        ssh-private-key: 'Wmbarros@2024!'
-
+        ssh-private-key: ${{ secrets.SSHKEY }}
+ 
     - name: Copy files into the server
       uses: appleboy/scp-action@v0.1.4
       with:
-        host: '201.46.121.218'
-        username: 'admin'
-        key: 'Wmbarros@2024!'
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSHKEY }}
         source: ./
-        target: /path/to/project
-
-    - name: Set up PHP
-      uses: shivammathur/setup-php@v2
+        target: /var/www/html/Teste
+ 
+    - uses: wmbarros/setup-php@15c43e89cdef867065b0213be354c2841860869e
       with:
-        php-version: '8.0'
-
-    - name: Checkout dev branch
-      uses: actions/checkout@v2
+        php-version: '8.2.7'
+    - uses: actions/checkout@v3
       with:
         ref: dev
-
     - name: Deploy
       uses: fifsky/ssh-action@master
       with:
-        host: '201.46.121.218'
-        username: 'admin'
-        password: 'Wmbarros@2024!'
-        script: 'cd /var/www/html/Teste && git pull'
+        command: | 
+          cd /var/www/html/Teste
+          # run any command you want.
+        host: ${{ secrets.HOST }}
+        port: ${{ secrets.PORT }}
+        user: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSHKEY}}
+        args: "-tt -vvv"
