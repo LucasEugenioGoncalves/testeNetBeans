@@ -1,4 +1,4 @@
-name: Deploy
+name: Copy Files to Server
 
 on:
   push:
@@ -6,35 +6,21 @@ on:
       - main
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Setup SSH connection
-      uses: webfactory/ssh-agent@v0.5.0
-      with:
-        ssh-private-key: ${{ secrets.SSHKEY }}
-
-    - name: Copy files into the server
-      uses: appleboy/scp-action@v0.1.4
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.SSHKEY }}
-        source: ./
-        target: /var/www/html/Teste
-
-    - name: Deploy
-      uses: fifsky/ssh-action@master
-      with:
-        command: | 
-          cd /var/www/html/Teste
-          # run any command you want.
-        host: ${{ secrets.HOST }}
-        port: ${{ secrets.PORT }}
-        user: ${{ secrets.USERNAME }}
-        key: ${{ secrets.SSHKEY}}
-        args: "-tt -vvv"
+      - name: Copy files to server
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSHKEY }}
+          source: "./*"
+          target: "/var/www/html/Teste"
+          port: ${{ secrets.PORT }}
+          timeout: 30s
+          command_timeout: 10m
