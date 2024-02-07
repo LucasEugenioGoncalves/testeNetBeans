@@ -17,10 +17,7 @@ jobs:
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.SSHKEY }}
-          passphrase: ${{ secrets.SSHPASS }}
+          password: ${{ secrets.SSHPASS }}
           source: "./*"
           target: "/var/www/html/Teste"
           port: ${{ secrets.PORT }}
-          timeout: 30s
-          command_timeout: 10m
