@@ -18,6 +18,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSHKEY }}
+          passphrase: ${{ secrets.SSHPASS }}
           source: "./*"
           target: "/var/www/html/Teste"
           port: ${{ secrets.PORT }}
